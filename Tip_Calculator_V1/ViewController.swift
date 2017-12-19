@@ -35,7 +35,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
         //automatically displays the decimal text monitor
         InputBillAmount.becomeFirstResponder()
         // Do any additional setup after loading the view, typically from a nib.
+        
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("view will appear")
+        button15.setTitle(String(Data.getPercent(value: 0)*100)+"%", for: .normal)
+        button25.setTitle(String(Data.getPercent(value: 1)*100)+"%", for: .normal)
+        button30.setTitle(String(Data.getPercent(value: 2)*100)+"%", for: .normal)
+        // This is a good place to retrieve the default tip percentage from UserDefaults
+        // and use it to update the tip amount
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("view did appear")
+    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -103,28 +120,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func updatePercent(setValueChange : Int, quantityChanged : Double){
-        if DEBUG{ print("SUCCESSFULLY updated the percent")}
-        
-        switch setValueChange {
-        case 1:
-            firstPercent = quantityChanged
-            button15.setTitle( String(firstPercent*100) + "%", for: .normal)
-        case 2:
-            secondPercent = quantityChanged
-        case 3:
-            thirdPercent = quantityChanged
-        default:
-            print("This shouldn't run")
-        }
-    }
-    
     /*
     update Methods for the percent
      */
     
     @IBAction func update15Percent(_ sender: UIButton) {
-        percentType = firstPercent
+        percentType = Data.getPercent(value: 0)
+        print(Data.getPercent(value: 0)*100)
         updateBillAndTip()
         button15.backgroundColor = UIColor.darkGray
         button25.backgroundColor = UIColor.gray
@@ -132,7 +134,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func update25Percent(_ sender: UIButton) {
-        percentType = secondPercent
+        percentType = Data.getPercent(value: 1)
         updateBillAndTip()
         button15.backgroundColor = UIColor.gray
         button25.backgroundColor = UIColor.darkGray
@@ -140,7 +142,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func update30Percent(_ sender: UIButton) {
-        percentType = thirdPercent
+        percentType = Data.getPercent(value: 2)
         updateBillAndTip()
         button15.backgroundColor = UIColor.gray
         button25.backgroundColor = UIColor.gray

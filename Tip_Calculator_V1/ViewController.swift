@@ -22,9 +22,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var firstPercent = 0.15
     var secondPercent = 0.25
     var thirdPercent = 0.30
-     var percentType = 0.0
+    var percentType = 0.0
     
     let DEBUG = true
+    
+    /*
+     Lifecycle methods
+     */
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +36,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
         button15.layer.cornerRadius = 8
         InputBillAmount.delegate = self
         self.title = "Tip Calculator"
+        
+        InputBillAmount.text! = ViewController.getSymbolForCurrencyCode()! + "0.0"
+        InputPlusTip.text! = ViewController.getSymbolForCurrencyCode()! + "0.0"
+        TipAmountValue.text! = ViewController.getSymbolForCurrencyCode()! + "0.0"
         //automatically displays the decimal text monitor
         InputBillAmount.becomeFirstResponder()
         // Do any additional setup after loading the view, typically from a nib.
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,12 +59,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
         super.viewDidAppear(animated)
         print("view did appear")
     }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    /*
+        methods updating the currency value
+     */
     
     func textViewDidChange(textView: UITextField) { //Handle the text changes here
         if DEBUG{ print("made it to textViewDidChange")}
@@ -69,15 +79,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         if let value = InputBillAmount!.text{
             if value.count > 3{
-                print ("Value is", value)
+               
                 let index = value.index(value.startIndex, offsetBy: 4)
-                print(String(value.prefix(upTo: index)))
-                if( String(value.prefix(upTo: index)) == "$0.0"){
-                let indexEnd = value.index(value.endIndex, offsetBy: 4 - value.count)
-                InputBillAmount.text! = String(value[indexEnd...])
+               
+                if( String(value.prefix(upTo: index)) == String(ViewController.getSymbolForCurrencyCode()!) + "0.0"){
+                    let indexEnd = value.index(value.endIndex, offsetBy: 4 - value.count)
+                    InputBillAmount.text! = String(value[indexEnd...])
                 }
+                
             }else if(value.count == 0){
-                InputBillAmount.text! = "$0.0"
+                InputBillAmount.text! = String(ViewController.getSymbolForCurrencyCode()!) + "0.0"
             }
         }
         updateBillAndTip()
@@ -88,35 +99,43 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         if let value = InputBillAmount!.text{
             if(value == ""){
-                InputBillAmount.text! = "$0.0"
+                InputBillAmount.text! = String(ViewController.getSymbolForCurrencyCode()!)+"0.0"
             }
         }
     }
     
     func updateBillAndTip(){
-        
         if DEBUG{ print("Made it into UpdateBillAmount")}
         
         if let stringValue = InputBillAmount!.text{
-        
-        if((stringValue.count == 1  && stringValue != "$" ) || stringValue.count > 1){
-           var billAmount = 0.0
-            
-            if(stringValue.first == "$"){
+            if((stringValue.count == 1  && stringValue != String(describing: ViewController.getSymbolForCurrencyCode()) ) || stringValue.count > 1){
+                var billAmount = 0.0
                 
-                let index = stringValue.index(stringValue.startIndex, offsetBy: 1)
+                if(String(describing: stringValue.first) == String(describing: ViewController.getSymbolForCurrencyCode()!.first) && stringValue.count > 1){
+                    /*
+                    var zeroAscii = Character("0").unicodeScalars.filter{$0.isASCII}.first?.value
+                    var nineAscii = Character("9").unicodeScalars.filter{$0.isASCII}.first?.value
+                    var checkAscii: UInt32 = 0
+                    var i: Int = 0
+                    while i < stringValue.count && checkAscii > nineAscii! || checkAscii < zeroAscii!  {
+                      
+                        checkAscii = (stringValue[stringValue.index(stringValue.startIndex,offsetBy: String.IndexDistance(i))].unicodeScalars.filter{$0.isASCII}.first?.value)!
+                      i = i + 1
+                    }
+                    */
+                    let index = stringValue.index(stringValue.startIndex, offsetBy: 1)
+                    
+                    billAmount = round((100)*Double(stringValue[index...])!)/100
+                    
+                }else if String(describing: stringValue.first) != String(describing: ViewController.getSymbolForCurrencyCode()!.first)  {
+                    billAmount = round(10*Double(stringValue)!)/10
+                }
                 
-                billAmount = round((10)*Double(stringValue[index...])!)/10
+                InputPlusTip.text! = String(ViewController.getSymbolForCurrencyCode()!) + String(billAmount + billAmount*percentType)
                 
-            }else{
-                billAmount = round(10*Double(stringValue)!)/10
+                TipAmount.text! = String(100*percentType) + "%"
+                TipAmountValue.text! = String(ViewController.getSymbolForCurrencyCode()!) + String(billAmount*percentType)
             }
-            
-            InputPlusTip.text! = "$" + String(billAmount + billAmount*percentType)
-            
-            TipAmount.text! = String(100*percentType) + "%"
-            TipAmountValue.text! = "$" + String(billAmount*percentType)
-        }
         }
     }
     
@@ -150,15 +169,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     /*
-        Setting
+        method for getting the currency symbol of the region
      */
+    static func getSymbolForCurrencyCode() -> String? {
+        let locale = NSLocale.autoupdatingCurrent
+        return locale.currencySymbol
+    }
     
-    @IBAction func SettingPressed(_ sender: UIBarButtonItem) {
-        if DEBUG{ print("SettingBarPressed") }
-    }
-    @IBAction func settingTransition(_ sender: UIButton) {
-        if DEBUG{ print("Setting has been pressed") }
-    }
     
 }
 

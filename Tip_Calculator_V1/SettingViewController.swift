@@ -41,9 +41,7 @@ class SettingViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        if DEBUG{
-        print("Made it to didReceiveMemoryWarning method")
-        }
+        if DEBUG{print("Made it to didReceiveMemoryWarning method")}
         // Dispose of any resources that can be recreated.
     }
     
@@ -51,20 +49,20 @@ class SettingViewController: UIViewController {
         if newInput1.text != ""{
             if let newPercent1 = newInput1!.text{
                 firstCurrentPerc.text! =  newInput1.text! + "%"
-                Data.setPercent(value: 0, newPercent: Double(newPercent1)!)
+                Data.setPercent(value: 0, newPercent: Double(newPercent1)!/100)
             }
         }
         if(newInput2!.text! != "")
         {
             if let newPercent2 = newInput2!.text{
                 secondCurrentPerc.text! =  newInput2.text! + "%"
-                Data.setPercent(value: 1, newPercent: Double(newPercent2)!)
+                Data.setPercent(value: 1, newPercent: Double(newPercent2)!/100)
             }
         }
         if newInput3!.text! != ""{
             if let newPercent1 = newInput3!.text{
                 thirdCurrentPerc.text! =  newInput3.text! + "%"
-                Data.setPercent(value: 2, newPercent: Double(newPercent1)!)
+                Data.setPercent(value: 2, newPercent: Double(newPercent1)!/100)
             }
         }
         firstCurrentPerc.text! = String(Data.getPercent(value: 0)*100) + "%"

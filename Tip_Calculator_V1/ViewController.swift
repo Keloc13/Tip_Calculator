@@ -115,13 +115,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     
                     InputBillAmount.text! = ""
                 }
-            updateBillAndTip()
             }
            else{
                 InputBillAmount.text! = String(ViewController.getSymbolForCurrencyCode()!) + "0.0"
                 InputPlusTip.text! = InputBillAmount.text!
             }
         }
+        updateBillAndTip()
         storesInputandTip()
     }
     

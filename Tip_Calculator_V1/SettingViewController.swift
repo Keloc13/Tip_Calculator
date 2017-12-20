@@ -23,6 +23,10 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var newInput2: UITextField!
     @IBOutlet weak var newInput3: UITextField!
     
+    /*
+     Method Name: viewDidLoad
+     Description: When the view loads, the labels are updated with the new percentage.
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         if DEBUG{
@@ -45,6 +49,10 @@ class SettingViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    /*
+     Method Name: changeButton
+     Description: This method takes the percent from the three text fields and updates the percent choices on the previous page.
+     */
     @IBAction func changeButton(_ sender: UIButton) {
         if newInput1.text != ""{
             if let newPercent1 = newInput1!.text{
@@ -71,7 +79,10 @@ class SettingViewController: UIViewController {
     }
     
     
-    
+    /*
+     Method Name: resetButton
+     Description: This method sets all the text fields and percent to the default 15%, 25%, and 30%.
+     */
     @IBAction func resetButton(_ sender: UIButton) {
         firstCurrentPerc.text! = "15.0%"
         secondCurrentPerc.text! = "25.0%"

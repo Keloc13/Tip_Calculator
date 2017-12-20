@@ -22,3 +22,9 @@ class Data{
         secondArray[value] = newPercent
     }
 }
+
+struct defaultKeys{
+    static let key1 = "FirstKey"
+    static let key2 = "SecondKey"
+    static let keyTime = "TimeKey"
+}

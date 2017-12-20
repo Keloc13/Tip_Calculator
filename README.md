@@ -8,7 +8,8 @@ Submitted by: Kevin Vu Nguyen
 Time spent: roughly 20-25 hours spent in total
 
 ## User Stories
-
+I've been programming since my senior year of high school in AP Computer Science. Since then, I've had a huge interest in the components of creating and understanding the programming and computer science. However, I've had a difficult time making project and standing out from the rest of the crowd. I am determined to push that aside and make a difference using this class as a resource to advance my learning in computer science. 
+##
 The following **required** functionality is complete:
 
 * [X] User can enter a bill amount, choose a tip percentage, and see the tip and total values.
@@ -35,6 +36,12 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Notes
 
 Describe any challenges encountered while building the app.
+
+1.) Working with the optional chaining syntax in swift. 
+2.) Making the view controller and connecting the two controller.
+3.) Understanding how to pass data between view controllers. 
+4.) Making the application work with currencies of different number of strings.
+5.) Which process in the application should be appropriate to store the data in the local database. 
 
 ## License
 

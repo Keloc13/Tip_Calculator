@@ -22,6 +22,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var percentType = 0.0
     
     let DEBUG = true
+    var startTyping = false
     
     /*
      LIFECYCLE METHODS
@@ -123,6 +124,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         updateBillAndTip()
         storesInputandTip()
+        
+        if InputBillAmount.text! == String(ViewController.getSymbolForCurrencyCode()!) + "0.0"{
+            //moveTextField(textField: InputBillAmount, moveDistance: -10, up: true)
+            //moveTextField(textField: InputPlusTip, moveDistance: -135, up: true)
+        }
+        else{
+           //  moveTextField(textField: InputBillAmount, moveDistance: -10, up: false)
+           //  moveTextField(textField: InputPlusTip, moveDistance: -135, up: false)
+        }
     }
     
     /*
@@ -203,6 +213,21 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         defaults.set(String(InputPlusTip.text!),forKey: defaultKeys.key2)
         defaults.set(String( NSDate().timeIntervalSince1970),forKey:defaultKeys.keyTime)
+    }
+    
+    /*
+     Animations
+     */
+    
+    func moveTextField(textField: UITextField, moveDistance: Int, up: Bool){
+        let moveDuration = 0.3
+        let movement: CGFloat = CGFloat(up ? -moveDistance: moveDistance)
+        
+        UIView.beginAnimations("animateTextField", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(moveDuration)
+        self.view.frame = CGRect().offsetBy(dx: 0.0,dy:movement)
+        UIView.commitAnimations()
     }
  }
 
